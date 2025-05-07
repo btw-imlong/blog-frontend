@@ -6,6 +6,7 @@ function App() {
     <>
       <Routes>
         <Route path="/" element={<Home />} />
+        <footer />
       </Routes>
     </>
   );
