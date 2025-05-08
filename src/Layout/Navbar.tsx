@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { Menu, X, ChevronDown } from 'lucide-react';
+import { Menu, X, ChevronDown, Search } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import logo from '../assets/logo.png';
 
 const Navbar = ({ isLoggedIn = true }) => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -8,8 +9,25 @@ const Navbar = ({ isLoggedIn = true }) => {
 
   return (
     <nav className="bg-white shadow-md px-4 py-3 flex items-center justify-between relative z-50">
-      <div className="flex items-center space-x-2">
-        <span className="font-bold text-xl text-black">MyBlog</span>
+      {/* Logo + Title */}
+    <div className="flex items-center space-x-2">
+      <Link to="/" className="flex items-center space-x-2">
+        <img src={logo} alt="Logo" className="h-13 w-13 object-cover" />
+        <span className="font-bold text-xl text-black">Blog Lines</span>
+      </Link>
+    </div>
+
+
+      {/* Search Bar - Desktop */}
+      <div className="hidden md:flex flex-1 justify-center px-4">
+        <div className="relative w-full max-w-sm">
+          <input
+            type="text"
+            placeholder="Search..."
+            className="w-full border rounded-full px-4 py-1.5 pr-10 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <Search className="absolute right-3 top-2.5 h-4 w-4 text-gray-500" />
+        </div>
       </div>
 
       {/* Desktop Menu */}
@@ -50,6 +68,16 @@ const Navbar = ({ isLoggedIn = true }) => {
       {/* Mobile Menu */}
       {menuOpen && (
         <div className="absolute top-16 left-0 w-full bg-white border-t md:hidden flex flex-col px-4 py-4 space-y-3 shadow-md z-10">
+          {/* Search Bar - Mobile */}
+          <div className="relative w-full">
+            <input
+              type="text"
+              placeholder="Search..."
+              className="w-full border rounded-full px-4 py-1.5 pr-10 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <Search className="absolute right-3 top-2.5 h-4 w-4 text-gray-500" />
+          </div>
+
           <Link to="/" className="text-gray-700">Home</Link>
           <Link to="/blog" className="text-gray-700">Blog</Link>
 
