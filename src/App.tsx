@@ -9,13 +9,14 @@ import Privacy from "./Pages/Privacy";
 import WhatWeDo from "./Pages/What-do-we-do";
 import Login from "./Auth/Login";
 import Register from "./Auth/Register";
+import BlogPage from "./Pages/blog";
 
 function App() {
   return (
     <>
       <Navbar />
-
       <Routes>
+        <Route path="/blog" element={<BlogPage />} />
         <Route path="/" element={<Home />} />
         <Route path="/blog" element={<Home />} />
         <Route path="/contact" element={<Contact />} />

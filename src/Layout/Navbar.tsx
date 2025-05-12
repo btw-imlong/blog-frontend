@@ -74,6 +74,12 @@ const Navbar = () => {
             >
               Profile
             </Link>
+            <Link
+              to="/my-blogs"
+              className="block px-4 py-2 text-sm hover:bg-gray-100"
+            >
+              My Blogs
+            </Link>
           </div>
         </div>
 
@@ -122,7 +128,7 @@ const Navbar = () => {
           <Link to="/" className="text-gray-700">
             Home
           </Link>
-          <Link to="/blog" className="text-gray-700">
+          <Link to="/BlogPage" className="text-gray-700">
             Blog
           </Link>
 
@@ -143,6 +149,9 @@ const Navbar = () => {
                 </Link>
                 <Link to="/profile" className="block text-sm text-gray-600">
                   Profile
+                </Link>
+                <Link to="/my-blogs" className="block text-sm text-gray-600">
+                  My Blogs
                 </Link>
               </div>
             )}
