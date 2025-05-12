@@ -1,5 +1,5 @@
+import { Route, Routes, useLocation } from "react-router";
 import Navbar from "./Layout/Navbar";
-import { Route, Routes } from "react-router";
 import Home from "./Pages/Home";
 import Footer from "./Layout/footer";
 import Contact from "./Pages/Contact";
@@ -12,13 +12,16 @@ import Register from "./Auth/Register";
 import BlogPage from "./Pages/blog";
 
 function App() {
+  const location = useLocation();
+  const hideLayout = ["/login", "/register"].includes(location.pathname);
+
   return (
     <>
-      <Navbar />
+      {!hideLayout && <Navbar />}
+
       <Routes>
         <Route path="/blog" element={<BlogPage />} />
         <Route path="/" element={<Home />} />
-        <Route path="/blog" element={<Home />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/about" element={<About />} />
         <Route path="/sponser" element={<Sponsor />} />
@@ -27,7 +30,8 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
       </Routes>
-      <Footer />
+
+      {!hideLayout && <Footer />}
     </>
   );
 }
