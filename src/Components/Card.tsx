@@ -44,7 +44,7 @@ const CardSection = () => {
         <HoverCard
           image={pic4}
           title="Sky Adventure"
-          description="Soar high with the clouds and dreams."
+          description="Soar high with the clouds."
         />
         <HoverCard
           image={pic3}
