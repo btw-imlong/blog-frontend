@@ -11,7 +11,7 @@ interface HoverCardProps {
 
 const HoverCard = ({ image, title, description }: HoverCardProps) => {
   return (
-    <div className="w-full max-w-sm rounded-2xl overflow-hidden shadow-lg bg-white transform hover:scale-105 hover:bg-gradient-to-r from-pink-200 via-purple-200 to-blue-200 transition-all duration-500 ease-in-out">
+    <div className="w-full max-w-sm rounded-2xl overflow-hidden shadow-lg transform hover:scale-105 hover:bg-gradient-to-r from-pink-200 via-purple-200 to-blue-200 transition-all duration-500 ease-in-out">
       <div className="overflow-hidden">
         <img
           src={image}
