@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom"
 import {
   FaThumbsUp,
   FaRegThumbsUp,
@@ -59,7 +60,18 @@ const BlogDetail = () => {
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-16 text-gray-800">
-      <h1 className="text-3xl font-bold mb-4">Enjoy With Me</h1>
+     <Link to="/profile" className="flex items-center gap-4 mb-4">
+        <img
+          src={Detail1} 
+          alt="Author Avatar"
+          className="w-12 h-12 rounded-full object-cover"
+        />
+        <div>
+        <p className="text-[0.8rem] font-semibold">Emilly</p>
+        <h1 className="text-2xl font-bold">Enjoy With Me {id}</h1>
+  </div>
+      </Link>
+
       <p className="mb-6 text-gray-600">Posted on May 12, 2025</p>
 
       <div className="mb-4">
@@ -70,9 +82,8 @@ const BlogDetail = () => {
         />
       </div>
 
-      {/* Reactions and Comment Actions */}
       <div className="flex items-center gap-6 mb-8 text-gray-600 text-base">
-        {/* Reactions */}
+
         <div className="flex items-center gap-4">
           <button
             onClick={() => handleReaction("like")}
@@ -109,7 +120,6 @@ const BlogDetail = () => {
           <span className="text-sm text-gray-500">({reactionCount})</span>
         </div>
 
-        {/* Comment Actions */}
         <button
           onClick={() => setShowCommentBox((prev) => !prev)}
           className="flex items-center gap-1 hover:text-blue-600 transition"
@@ -125,7 +135,6 @@ const BlogDetail = () => {
         </button>
       </div>
 
-      {/* Add Comment Box */}
       {showCommentBox && (
         <form onSubmit={handleCommentSubmit} className="mb-6">
           <textarea
@@ -144,7 +153,6 @@ const BlogDetail = () => {
         </form>
       )}
 
-      {/* View Comment List (toggle) */}
       {showCommentList && comments.length > 0 && (
         <div className="space-y-4">
           {comments.map((comment) =>
