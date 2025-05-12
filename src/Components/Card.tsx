@@ -34,7 +34,7 @@ const HoverCard = ({ image, title, description }: HoverCardProps) => {
 
 const CardSection = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4 py-10">
+    <div className="h-1/3 flex items-center justify-center px-4 py-5">
       <div className="flex flex-col md:flex-row gap-8 justify-center items-center">
         <HoverCard
           image={pic5}
@@ -49,12 +49,12 @@ const CardSection = () => {
         <HoverCard
           image={pic3}
           title="Ocean Secrets"
-          description="Dive into the mysterious depths of."
+          description="Dive into the mysterious."
         />
          <HoverCard
           image={pic2}
           title="Here's your"
-          description="inside the container so the layout ."
+          description="inside the container so the."
         />
       </div>
     </div>
