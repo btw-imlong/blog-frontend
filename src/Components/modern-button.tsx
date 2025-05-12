@@ -8,7 +8,7 @@ interface ModernButtonProps {
   icon?: JSX.Element;
   loading?: boolean;
   disabled?: boolean;
-  onClick?: () => void;
+  onClick?: (e: React.FormEvent) => void; // Updated to accept event argument
   size?: ButtonSize;
   theme?: ButtonTheme;
 }
@@ -41,7 +41,7 @@ const ModernButton: React.FC<ModernButtonProps> = ({
 
   return (
     <button
-      onClick={onClick}
+      onClick={onClick} // onClick will now accept the event argument correctly
       disabled={disabled || loading}
       className={`
         ${baseStyles}
