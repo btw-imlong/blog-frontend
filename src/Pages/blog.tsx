@@ -88,7 +88,7 @@ const BlogPage = () => {
       <section className="py-5 bg-gray-100">
         <div className="max-w-1xl mx-auto px-2 text-center">
           <h2 className="text-2xl font-bold mt-6">Our Blog</h2>
-          <Card></Card>
+          <Card id={""} image={""} title={""} description={""}></Card>
         </div>
       </section>
 
