@@ -1,6 +1,8 @@
 import Card from "../Components/Card"
 import pic1 from "../assets/pic1.jpg";
 import pic from "../assets/pic-blog1.jpg";
+import blog1 from "../assets/blog1.jpg";
+import blog2 from "../assets/blog2.jpg";
 import ModernButton from "../Components/modern-button"; 
 
 const BlogPage = () => {
@@ -27,7 +29,11 @@ const BlogPage = () => {
                 key={item}
                 className="bg-white rounded-md shadow-md h-48 flex items-center justify-center"
               >
-                <span>Image {item}</span>
+                <div className="text-center">
+                  <img src={blog2} alt="" className="w-16 h-16 mb-4" />
+                  <h3 className="text-lg font-semibold">Advantage {item}</h3>
+                  <p className="text-gray-600">Description of advantage {item}.</p>
+                </div>
               </div>
             ))}
           </div>
@@ -54,7 +60,7 @@ const BlogPage = () => {
             </div>
           </div>
           <div className="bg-gray-200 h-64 rounded-md flex items-center justify-center">
-            <span>Image</span>
+            <img src={blog1} alt="" />
           </div>
         </div>
       </section>
