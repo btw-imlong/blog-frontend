@@ -11,7 +11,7 @@ interface HoverCardProps {
 
 const HoverCard = ({ image, title, description }: HoverCardProps) => {
   return (
-    <div className="w-full max-w-sm rounded-2xl overflow-hidden shadow-lg bg-white transform hover:scale-105 hover:bg-gradient-to-r from-pink-200 via-purple-200 to-blue-200 transition-all duration-500 ease-in-out">
+    <div className="w-full max-w-sm rounded-2xl overflow-hidden shadow-lg transform hover:scale-105 hover:bg-gradient-to-r from-pink-200 via-purple-200 to-blue-200 transition-all duration-500 ease-in-out">
       <div className="overflow-hidden">
         <img
           src={image}
@@ -34,7 +34,7 @@ const HoverCard = ({ image, title, description }: HoverCardProps) => {
 
 const CardSection = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4 py-10">
+    <div className="h-1/3 flex items-center justify-center px-4 py-5">
       <div className="flex flex-col md:flex-row gap-8 justify-center items-center">
         <HoverCard
           image={pic5}
