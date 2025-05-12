@@ -1,5 +1,6 @@
 import Card from "../Components/Card"
 import pic1 from "../assets/pic1.jpg";
+import pic from "../assets/pic-blog1.jpg";
 import ModernButton from "../Components/modern-button"; 
 
 const BlogPage = () => {
@@ -69,7 +70,7 @@ const BlogPage = () => {
           </div>
           <div className="grid md:grid-cols-2 gap-4">
             <div className="bg-gray-700 h-48 flex items-center justify-center rounded-md">
-              <span>Video/Feature Image</span>
+              <img src={pic} className="w-150 h-48 rounded-md" alt="" />
             </div>
             <div className="grid grid-cols-2 gap-4">
               <ModernButton text="Feature 1 🌟" />
@@ -86,7 +87,7 @@ const BlogPage = () => {
       {/* Our Blog Section */}
       <section className="py-5 bg-gray-100">
         <div className="max-w-1xl mx-auto px-2 text-center">
-          <h2 className="text-2xl font-bold mb-4">Our Blog</h2>
+          <h2 className="text-2xl font-bold mt-6">Our Blog</h2>
           <Card></Card>
         </div>
       </section>
