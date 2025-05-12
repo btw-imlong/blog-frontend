@@ -45,7 +45,7 @@ const Footer = () => {
                 Privacy Policy
               </Link>
               <span className="text-red-500">|</span>
-              <Link to="history" className="hover:text-red-500">
+              <Link to="about" className="hover:text-red-500">
                 Our History
               </Link>
               <span className="text-red-500">|</span>

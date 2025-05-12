@@ -1,18 +1,31 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Menu, X, ChevronDown, Search } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router";
 import logo from "../assets/logo.png";
 
-const Navbar = ({ isLoggedIn = true }) => {
+const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const status = localStorage.getItem("isLoggedIn") === "true";
+    setIsLoggedIn(status);
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("isLoggedIn");
+    setIsLoggedIn(false);
+    navigate("/login");
+  };
 
   return (
     <nav className="bg-white shadow-md px-4 py-3 flex items-center justify-between relative z-50">
       {/* Logo + Title */}
       <div className="flex items-center space-x-2">
         <Link to="/" className="flex items-center space-x-2">
-          <img src={logo} alt="Logo" className="h-13 w-13 object-cover" />
+          <img src={logo} alt="Logo" className="h-10 w-10 object-cover" />
           <span className="font-bold text-xl text-black">Blog Lines</span>
         </Link>
       </div>
@@ -38,12 +51,11 @@ const Navbar = ({ isLoggedIn = true }) => {
           Blog
         </Link>
 
-        {/* Dropdown Parent */}
         <div className="relative group">
           <button className="flex items-center text-gray-700 hover:text-black">
             Pages <ChevronDown className="ml-1 h-4 w-4" />
           </button>
-          <div className="absolute hidden group-hover:block bg-white border mt-2 shadow-lg rounded-md py-2 min-w-[150px]">
+          <div className="absolute hidden group-hover:block bg-white border mt-2 shadow-lg rounded-md py-2 min-w-[150px] z-50">
             <Link
               to="/dashboard"
               className="block px-4 py-2 text-sm hover:bg-gray-100"
@@ -68,6 +80,7 @@ const Navbar = ({ isLoggedIn = true }) => {
         <Link to="/about" className="text-gray-700 hover:text-black">
           About
         </Link>
+
         {!isLoggedIn ? (
           <>
             <Link to="/login" className="text-gray-500 hover:text-black">
@@ -78,11 +91,16 @@ const Navbar = ({ isLoggedIn = true }) => {
             </Link>
           </>
         ) : (
-          <button className="text-gray-500 hover:text-black">Sign out</button>
+          <button
+            onClick={handleLogout}
+            className="text-gray-500 hover:text-black"
+          >
+            Sign out
+          </button>
         )}
       </div>
 
-      {/* Hamburger */}
+      {/* Hamburger - Mobile */}
       <div className="md:hidden">
         <button onClick={() => setMenuOpen(!menuOpen)}>
           {menuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -92,7 +110,6 @@ const Navbar = ({ isLoggedIn = true }) => {
       {/* Mobile Menu */}
       {menuOpen && (
         <div className="absolute top-16 left-0 w-full bg-white border-t md:hidden flex flex-col px-4 py-4 space-y-3 shadow-md z-10">
-          {/* Search Bar - Mobile */}
           <div className="relative w-full">
             <input
               type="text"
@@ -109,7 +126,6 @@ const Navbar = ({ isLoggedIn = true }) => {
             Blog
           </Link>
 
-          {/* Mobile Dropdown */}
           <div>
             <button
               onClick={() => setDropdownOpen(!dropdownOpen)}
@@ -135,6 +151,7 @@ const Navbar = ({ isLoggedIn = true }) => {
           <Link to="/about" className="text-gray-700">
             About
           </Link>
+
           {!isLoggedIn ? (
             <>
               <Link to="/login" className="text-gray-500">
@@ -145,7 +162,9 @@ const Navbar = ({ isLoggedIn = true }) => {
               </Link>
             </>
           ) : (
-            <button className="text-gray-500">Sign out</button>
+            <button onClick={handleLogout} className="text-gray-500">
+              Sign out
+            </button>
           )}
         </div>
       )}
