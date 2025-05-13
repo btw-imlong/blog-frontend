@@ -10,6 +10,7 @@ import WhatWeDo from "./Pages/What-do-we-do";
 import Login from "./Auth/Login";
 import Register from "./Auth/Register";
 import BlogPage from "./Pages/blog";
+import BlogDetail from "./Pages/blog-detail";
 
 function App() {
   const location = useLocation();
@@ -29,6 +30,7 @@ function App() {
         <Route path="/What-we-do" element={<WhatWeDo />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/blog-detail/:id" element={<BlogDetail />} />
       </Routes>
 
       {!hideLayout && <Footer />}
