@@ -1,28 +1,27 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Menu, X, ChevronDown, Search } from "lucide-react";
-import { Link, useNavigate } from "react-router";
+import { Link } from "react-router";
 import logo from "../assets/logo.png";
 
-const Navbar = () => {
+const profilePic = "https://i.pravatar.cc/40";
+
+const Navbar = ({ isLoggedIn = true }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const navigate = useNavigate();
+  const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
 
-  useEffect(() => {
-    const status = localStorage.getItem("isLoggedIn") === "true";
-    setIsLoggedIn(status);
-  }, []);
-
-  const handleLogout = () => {
-    localStorage.removeItem("isLoggedIn");
-    setIsLoggedIn(false);
-    navigate("/login");
-  };
+  const profileLinks = [
+    { name: "Profile", path: "/profile" },
+    { name: "Dashboard", path: "/dashboard" },
+    { name: "My Blogs", path: "/my-blogs" },
+    { name: "Saved Posts", path: "/saved-posts" },
+    { name: "Notifications", path: "/notifications" },
+    { name: "Settings", path: "/settings" },
+  ];
 
   return (
     <nav className="bg-white shadow-md px-4 py-3 flex items-center justify-between relative z-50">
-      {/* Logo + Title */}
+      {/* Logo */}
       <div className="flex items-center space-x-2">
         <Link to="/" className="flex items-center space-x-2">
           <img src={logo} alt="Logo" className="h-10 w-10 object-cover" />
@@ -30,7 +29,7 @@ const Navbar = () => {
         </Link>
       </div>
 
-      {/* Search Bar - Desktop */}
+      {/* Search - Desktop */}
       <div className="hidden md:flex flex-1 justify-center px-4">
         <div className="relative w-full max-w-sm">
           <input
@@ -50,39 +49,6 @@ const Navbar = () => {
         <Link to="/blog" className="text-gray-700 hover:text-black">
           Blog
         </Link>
-
-        <div className="relative group">
-          <button className="flex items-center text-gray-700 hover:text-black">
-            Pages <ChevronDown className="ml-1 h-4 w-4" />
-          </button>
-          <div className="absolute hidden group-hover:block bg-white border mt-2 shadow-lg rounded-md py-2 min-w-[150px] z-50">
-            <Link
-              to="/dashboard"
-              className="block px-4 py-2 text-sm hover:bg-gray-100"
-            >
-              Dashboard
-            </Link>
-            <Link
-              to="/create"
-              className="block px-4 py-2 text-sm hover:bg-gray-100"
-            >
-              Create Post
-            </Link>
-            <Link
-              to="/profile"
-              className="block px-4 py-2 text-sm hover:bg-gray-100"
-            >
-              Profile
-            </Link>
-            <Link
-              to="/my-blogs"
-              className="block px-4 py-2 text-sm hover:bg-gray-100"
-            >
-              My Blogs
-            </Link>
-          </div>
-        </div>
-
         <Link to="/about" className="text-gray-700 hover:text-black">
           About
         </Link>
@@ -97,16 +63,38 @@ const Navbar = () => {
             </Link>
           </>
         ) : (
-          <button
-            onClick={handleLogout}
-            className="text-gray-500 hover:text-black"
-          >
-            Sign out
-          </button>
+          <div className="relative">
+            <button
+              onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}
+              className="flex items-center space-x-2 text-gray-700 hover:text-black"
+            >
+              <img
+                src={profilePic}
+                alt="Profile"
+                className="w-8 h-8 rounded-full object-cover"
+              />
+            </button>
+            {profileDropdownOpen && (
+              <div className="absolute right-0 mt-3 w-64 bg-black text-white border shadow-lg rounded-lg py-4 px-4 z-50 space-y-3">
+                {profileLinks.map((link, idx) => (
+                  <Link
+                    key={idx}
+                    to={link.path}
+                    className="block text-lg rounded-md px-2 py-2 transition-all duration-200 hover:bg-gray-900 hover:text-white"
+                  >
+                    {link.name}
+                  </Link>
+                ))}
+                <button className="block w-full text-left text-lg text-red-400 rounded-md px-2 py-2 transition-all duration-200 hover:bg-gray-900 hover:text-red-300">
+                  Sign out
+                </button>
+              </div>
+            )}
+          </div>
         )}
       </div>
 
-      {/* Hamburger - Mobile */}
+      {/* Hamburger Icon - Mobile */}
       <div className="md:hidden">
         <button onClick={() => setMenuOpen(!menuOpen)}>
           {menuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -116,6 +104,7 @@ const Navbar = () => {
       {/* Mobile Menu */}
       {menuOpen && (
         <div className="absolute top-16 left-0 w-full bg-white border-t md:hidden flex flex-col px-4 py-4 space-y-3 shadow-md z-10">
+          {/* Search - Mobile */}
           <div className="relative w-full">
             <input
               type="text"
@@ -128,7 +117,7 @@ const Navbar = () => {
           <Link to="/" className="text-gray-700">
             Home
           </Link>
-          <Link to="/BlogPage" className="text-gray-700">
+          <Link to="/blog" className="text-gray-700">
             Blog
           </Link>
 
@@ -146,9 +135,6 @@ const Navbar = () => {
                 </Link>
                 <Link to="/create" className="block text-sm text-gray-600">
                   Create Post
-                </Link>
-                <Link to="/profile" className="block text-sm text-gray-600">
-                  Profile
                 </Link>
                 <Link to="/my-blogs" className="block text-sm text-gray-600">
                   My Blogs
@@ -171,9 +157,35 @@ const Navbar = () => {
               </Link>
             </>
           ) : (
-            <button onClick={handleLogout} className="text-gray-500">
-              Sign out
-            </button>
+            <div className="mt-3">
+              <button
+                onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}
+                className="flex items-center space-x-2 text-gray-700"
+              >
+                <img
+                  src={profilePic}
+                  alt="Profile"
+                  className="w-8 h-8 rounded-full object-cover"
+                />
+                <span>Profile</span>
+              </button>
+              {profileDropdownOpen && (
+                <div className="mt-3 bg-black text-white rounded-lg px-4 py-4 space-y-3">
+                  {profileLinks.map((link, idx) => (
+                    <Link
+                      key={idx}
+                      to={link.path}
+                      className="block text-lg rounded-md px-2 py-2 transition-all duration-200 hover:bg-gray-900 hover:text-white"
+                    >
+                      {link.name}
+                    </Link>
+                  ))}
+                  <button className="block w-full text-left text-lg text-red-400 rounded-md px-2 py-2 transition-all duration-200 hover:bg-gray-900 hover:text-red-300">
+                    Sign out
+                  </button>
+                </div>
+              )}
+            </div>
           )}
         </div>
       )}
