@@ -32,17 +32,40 @@ const Navbar = ({ isLoggedIn = true }) => {
       <div className="hidden md:flex items-center space-x-6">
         <Link to="/" className="text-gray-700 hover:text-black">Home</Link>
         <Link to="/blog" className="text-gray-700 hover:text-black">Blog</Link>
-        <Link to="/sponsor" className="text-gray-700 hover:text-black">Sponsor</Link>
-        <Link to="/sponsor" className="text-gray-700 hover:text-black">Register</Link>
-        {!isLoggedIn ? (
-  <>
-    <Link to="/login" className="text-gray-500">Login</Link>
-    <Link to="/register" className="text-gray-500">Register</Link>
-  </>
-) : (
-  <button className="text-gray-500">Login</button>
-)}
+        <Link to="/about" className="text-gray-700 hover:text-black">About</Link>
 
+        {/* Buttons */}
+        {!isLoggedIn ? (
+          <>
+            <Link
+              to="/login"
+              className="bg-blue-500 text-white px-4 py-2 rounded-full text-sm hover:bg-blue-600 transition"
+            >
+              Login
+            </Link>
+            <Link
+              to="/register"
+              className="bg-gray-100 text-gray-800 px-4 py-2 rounded-full text-sm hover:bg-gray-200 transition"
+            >
+              Register
+            </Link>
+          </>
+        ) : (
+          <>
+            <Link
+              to="/login"
+              className="bg-blue-500 text-white px-4 py-2 rounded-full text-sm hover:bg-blue-600 transition"
+            >
+              Login
+            </Link>
+            <Link
+              to="/register"
+              className="bg-gray-100 text-gray-800 px-4 py-2 rounded-full text-sm hover:bg-gray-200 transition"
+            >
+              Register
+            </Link>
+          </>
+        )}
       </div>
 
       {/* Hamburger - Mobile */}
@@ -67,7 +90,6 @@ const Navbar = ({ isLoggedIn = true }) => {
 
           <Link to="/" className="text-gray-700">Home</Link>
           <Link to="/blog" className="text-gray-700">Blog</Link>
-          <Link to="/sponsor" className="text-gray-700">Sponsor</Link>
           <Link to="/about" className="text-gray-700">About</Link>
 
           {!isLoggedIn ? (
@@ -86,7 +108,20 @@ const Navbar = ({ isLoggedIn = true }) => {
               </Link>
             </>
           ) : (
-            <button className="text-gray-500 text-left">Sign out</button>
+            <>
+              <Link
+                to="/login"
+                className="bg-blue-500 text-white text-center px-4 py-2 rounded-full text-sm hover:bg-blue-600 transition"
+              >
+                Login
+              </Link>
+              <Link
+                to="/register"
+                className="bg-gray-100 text-gray-800 text-center px-4 py-2 rounded-full text-sm hover:bg-gray-200 transition"
+              >
+                Register
+              </Link>
+            </>
           )}
         </div>
       )}
