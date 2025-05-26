@@ -11,10 +11,40 @@ const Login = () => {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setTimeout(() => {
-      localStorage.setItem("isLoggedIn", "true");
-      navigate("/");
-    }, 1000);
+
+    const form = e.target as HTMLFormElement;
+    const email = (form.elements.namedItem("email") as HTMLInputElement).value;
+    const password = (form.elements.namedItem("password") as HTMLInputElement).value;
+
+    try {
+      const response = await fetch("http://localhost:1337/api/auth/local", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          identifier: email, // Strapi uses 'identifier' for email/username
+          password,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        console.log("Login success!", data);
+        localStorage.setItem("jwt", data.jwt); // Save JWT token
+        localStorage.setItem("user", JSON.stringify(data.user)); // Save user info
+        navigate("/"); // Redirect to home page
+      } else {
+        console.error("Login failed:", data);
+        alert(data.error?.message || "Login failed");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -35,6 +65,7 @@ const Login = () => {
             </label>
             <input
               type="email"
+              name="email"
               required
               className="w-full px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-400"
             />
@@ -45,6 +76,7 @@ const Login = () => {
             </label>
             <input
               type="password"
+              name="password"
               required
               className="w-full px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-400"
             />
@@ -54,7 +86,7 @@ const Login = () => {
             text={loading ? "Logging in..." : "Login"}
             loading={loading}
             disabled={loading}
-            onClick={handleLogin} // Using the updated button component
+            onClick={() => {}} // onClick not needed since form handles submit
             size="md"
             theme="primary"
           />
