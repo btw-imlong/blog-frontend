@@ -6,11 +6,13 @@ import ModernButton from "../Components/modern-button";
 
 const Login = () => {
   const [loading, setLoading] = useState(false);
+  const [loginError, setLoginError] = useState(false);
   const navigate = useNavigate();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    setLoginError(false);
 
     const form = e.target as HTMLFormElement;
     const email = (form.elements.namedItem("email") as HTMLInputElement).value;
@@ -23,7 +25,7 @@ const Login = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          identifier: email, // Strapi uses 'identifier' for email/username
+          identifier: email,
           password,
         }),
       });
@@ -32,16 +34,16 @@ const Login = () => {
 
       if (response.ok) {
         console.log("Login success!", data);
-        localStorage.setItem("jwt", data.jwt); // Save JWT token
-        localStorage.setItem("user", JSON.stringify(data.user)); // Save user info
-        navigate("/"); // Redirect to home page
+        localStorage.setItem("jwt", data.jwt);
+        localStorage.setItem("user", JSON.stringify(data.user));
+        navigate("/");
       } else {
         console.error("Login failed:", data);
-        alert(data.error?.message || "Login failed");
+        setLoginError(true);
       }
     } catch (error) {
       console.error("Error:", error);
-      alert("Something went wrong. Please try again.");
+      setLoginError(true);
     } finally {
       setLoading(false);
     }
@@ -55,9 +57,10 @@ const Login = () => {
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.6 }}
       >
-        <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">
+        <h2 className="text-3xl font-bold text-center text-gray-800 mb-4">
           Welcome Back
         </h2>
+
         <form onSubmit={handleLogin} className="space-y-6">
           <div>
             <label className="block text-gray-700 font-semibold mb-2">
@@ -70,6 +73,7 @@ const Login = () => {
               className="w-full px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-400"
             />
           </div>
+
           <div>
             <label className="block text-gray-700 font-semibold mb-2">
               Password
@@ -78,19 +82,27 @@ const Login = () => {
               type="password"
               name="password"
               required
-              className="w-full px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className={`w-full px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 ${
+                loginError ? "border-red-400 focus:ring-red-400" : "focus:ring-blue-400"
+              }`}
             />
+            {loginError && (
+              <p className="text-red-600 text-sm mt-1">
+                Incorrect email or password. Please try again.
+              </p>
+            )}
           </div>
 
           <ModernButton
             text={loading ? "Logging in..." : "Login"}
             loading={loading}
             disabled={loading}
-            onClick={() => {}} // onClick not needed since form handles submit
+            onClick={() => {}}
             size="md"
             theme="primary"
           />
         </form>
+
         <p className="mt-6 text-center text-sm text-gray-500">
           Don’t have an account?{" "}
           <a
