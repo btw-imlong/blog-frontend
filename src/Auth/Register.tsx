@@ -52,11 +52,14 @@ const Register = () => {
 
     setLoading(true);
     try {
-      const response = await axios.post("http://localhost:1337/api/auth/local/register", {
-        username: name,
-        email,
-        password,
-      });
+      const response = await axios.post(
+        "http://localhost:1337/api/auth/local/register",
+        {
+          username: name,
+          email,
+          password,
+        }
+      );
 
       const { jwt, user } = response.data;
 
@@ -64,9 +67,12 @@ const Register = () => {
       localStorage.setItem("user", JSON.stringify(user));
       alert("Registration successful!");
       navigate("/");
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       console.error("Error registering:", error);
-      const errorMsg = error.response?.data?.error?.message || "Something went wrong. Please try again.";
+      const errorMsg =
+        error.response?.data?.error?.message ||
+        "Something went wrong. Please try again.";
       alert(errorMsg);
     } finally {
       setLoading(false);
