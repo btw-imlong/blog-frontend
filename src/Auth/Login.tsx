@@ -21,21 +21,26 @@ const Login = () => {
     try {
       const response = await fetch("http://localhost:1337/api/auth/local", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          identifier: email,
-          password,
-        }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ identifier: email, password }),
       });
 
       const data = await response.json();
 
       if (response.ok) {
-        console.log("Login success!", data);
         localStorage.setItem("jwt", data.jwt);
         localStorage.setItem("user", JSON.stringify(data.user));
+
+        // 🌟 Save profile picture if available
+        const profilePic = data.user?.profile?.picture?.url
+          ? `http://localhost:1337${data.user.profile.picture.url}`
+          : null;
+        if (profilePic) {
+          localStorage.setItem("profilePic", profilePic);
+        } else {
+          localStorage.removeItem("profilePic");
+        }
+
         navigate("/");
       } else {
         console.error("Login failed:", data);
@@ -63,9 +68,7 @@ const Login = () => {
 
         <form onSubmit={handleLogin} className="space-y-6">
           <div>
-            <label className="block text-gray-700 font-semibold mb-2">
-              Email
-            </label>
+            <label className="block text-gray-700 font-semibold mb-2">Email</label>
             <input
               type="email"
               name="email"
@@ -75,9 +78,7 @@ const Login = () => {
           </div>
 
           <div>
-            <label className="block text-gray-700 font-semibold mb-2">
-              Password
-            </label>
+            <label className="block text-gray-700 font-semibold mb-2">Password</label>
             <input
               type="password"
               name="password"
@@ -105,10 +106,7 @@ const Login = () => {
 
         <p className="mt-6 text-center text-sm text-gray-500">
           Don’t have an account?{" "}
-          <a
-            href="/register"
-            className="text-blue-500 font-medium hover:underline"
-          >
+          <a href="/register" className="text-blue-500 font-medium hover:underline">
             Register here
           </a>
         </p>
