@@ -34,8 +34,15 @@ const BlogPage = () => {
         transition={{ duration: 0.7 }}
         viewport={{ once: true }}
       >
+        <div className="flex justify-center gap-5"> 
+          <ModernButton text="Funny" theme="secondary"/>
+          <ModernButton text="Sport" theme="secondary"/>
+          <ModernButton text="Education" theme="secondary"/>
+          <ModernButton text="Food" theme="secondary"/>
+        </div>
         <div className="max-w-1xl mx-auto px-2 text-center">
           <h2 className="text-2xl font-bold mt-6">Our Blog</h2>
+          <Card></Card>
           <Card></Card>
         </div>
       </motion.section>
