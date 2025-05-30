@@ -4,6 +4,7 @@ import { useRef } from "react";
 import Picture1 from "../assets/Home1.png";
 import Picture2 from "../assets/Home2.png";
 import Card from "../Components/Card"
+import { Link } from "react-router-dom";
 
 const Home = () => {
   const section2Ref = useRef(null);
@@ -137,7 +138,7 @@ const Home = () => {
           transition={{ delay: 0.6, duration: 0.6 }}
           className="flex justify-center mt-8"
         >
-          <ModernButton text="See More" theme="secondary" />
+        <Link to="/blog"><ModernButton text="See More" theme="secondary" /></Link>
         </motion.div>
       </motion.div>
 
