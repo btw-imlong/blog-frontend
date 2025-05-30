@@ -41,6 +41,7 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route path="/blog-detail/:id" element={<BlogDetail />} />
       </Routes>
 
       {!hideLayout && <Footer />}

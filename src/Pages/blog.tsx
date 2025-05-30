@@ -1,8 +1,12 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import Card from "../Components/Card";
 import ModernButton from "../Components/modern-button";
+import Filter from "../Components/filter";
 
 const BlogPage = () => {
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+
   return (
     <div className="text-gray-800">
       {/* Hero Section */}
@@ -34,9 +38,14 @@ const BlogPage = () => {
         transition={{ duration: 0.7 }}
         viewport={{ once: true }}
       >
+        {/* Pass the handler to Filter */}
+        <Filter onSelectCategory={setSelectedCategory} />
+
         <div className="max-w-1xl mx-auto px-2 text-center">
           <h2 className="text-2xl font-bold mt-6">Our Blog</h2>
-          <Card></Card>
+
+          {/* Pass the selectedCategory to Card */}
+          <Card selectedCategory={selectedCategory} />
         </div>
       </motion.section>
 
