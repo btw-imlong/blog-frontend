@@ -1,7 +1,7 @@
 import { Route, Routes, useLocation } from "react-router";
 import Navbar from "./Layout/Navbar";
-import Home from "./Pages/Home";
 import Footer from "./Layout/footer";
+import Home from "./Pages/Home";
 import Contact from "./Pages/Contact";
 import About from "./Pages/About";
 import Sponsor from "./Pages/Sponsor";
@@ -11,6 +11,8 @@ import Login from "./Auth/Login";
 import Register from "./Auth/Register";
 import BlogPage from "./Pages/blog";
 import BlogDetail from "./Pages/blog-detail";
+import Profile from "./Auth/Profile";
+import ProtectedRoute from "./Components/ProtectedRoute";
 
 function App() {
   const location = useLocation();
@@ -21,7 +23,6 @@ function App() {
       {!hideLayout && <Navbar />}
 
       <Routes>
-        <Route path="/blog" element={<BlogPage />} />
         <Route path="/" element={<Home />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/about" element={<About />} />
@@ -30,7 +31,16 @@ function App() {
         <Route path="/What-we-do" element={<WhatWeDo />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/blog" element={<BlogPage />} />
         <Route path="/blog-detail/:id" element={<BlogDetail />} />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
 
       {!hideLayout && <Footer />}
