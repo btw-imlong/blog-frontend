@@ -1,69 +1,98 @@
-import ModernButton from "./modern-button";
-import pic2 from "../assets/pic2.jpg";
-import pic3 from "../assets/pic3.jpg";
-import pic4 from "../assets/pic4.jpg";
-import pic5 from "../assets/pic5.jpg";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-interface HoverCardProps {
-  id: string;
-  image: string;
-  title: string;
-  description: string;
+
+interface Blog {
+  id: number;
+  documentId: string;
+  tittle: string;
+  contant: string;
+  images?: {
+    url?: string;
+    formats?: {
+      medium?: { url: string };
+    };
+  };
 }
 
-const HoverCard = ({ id, image, title, description }: HoverCardProps) => {
-  return (
-    <Link to={`/blog-detail/${id}`}>
-      <div className="w-full max-w-sm rounded-2xl overflow-hidden shadow-lg bg-white transform hover:scale-105 hover:bg-gradient-to-r from-pink-200 via-purple-200 to-blue-200 transition-all duration-500 ease-in-out cursor-pointer">
-        <div className="overflow-hidden">
-          <img
-            src={image}
-            alt="Card"
-            className="w-full h-48 object-cover transform hover:scale-110 transition-transform duration-500 ease-in-out"
-          />
-        </div>
-        <div className="p-5">
-          <h2 className="text-2xl line-clamp-1 font-bold text-purple-700 mb-2 font-mono transition-all duration-300 hover:tracking-wide">
-            {title}
-          </h2>
-          <p className="text-gray-700 text-sm font-light mb-4 italic">
-            {description}
-          </p>
-          <ModernButton text=" 🌟 Explore" />
-        </div>
+const HoverCard = ({ documentId, image, title, description }: any) => (
+  <Link to={`/blog-detail/${documentId}`}>
+    <div className="w-full max-w-sm rounded-2xl overflow-hidden shadow-lg bg-white transform hover:scale-105 hover:bg-gradient-to-r from-pink-200 via-purple-200 to-blue-200 transition-all duration-500 ease-in-out cursor-pointer">
+      <div className="overflow-hidden">
+        <img
+          src={image}
+          alt="Card"
+          className="w-[16rem] h-48 object-cover transform hover:scale-110 transition-transform duration-500 ease-in-out"
+        />
       </div>
-    </Link>
-  );
-};
+      <div className="p-5">
+        <h2 className="text-2xl line-clamp-1 font-bold text-purple-700 mb-2 font-mono transition-all duration-300 hover:tracking-wide">
+          {title}
+        </h2>
+        <p className="text-gray-700 text-sm font-light mb-4 italic">
+          {description}
+        </p>
+      </div>
+    </div>
+  </Link>
+);
 
 const CardSection = () => {
+  const [blogs, setBlogs] = useState<Blog[]>([]);
+  const [searchText, setSearchText] = useState("");
+
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      try {
+        const res = await fetch("http://localhost:1337/api/blogs?populate=*");
+        const json = await res.json();
+        setBlogs(json.data || []);
+      } catch (err) {
+        console.error("Error fetching blogs:", err);
+      }
+    };
+
+    fetchBlogs();
+  }, []);
+
+  const filteredBlogs = blogs.filter((blog) => {
+    const title = blog.tittle?.toLowerCase() || "";
+    const content = blog.contant?.toLowerCase() || "";
+    return title.includes(searchText.toLowerCase()) || content.includes(searchText.toLowerCase());
+  });
+
   return (
-    <div className="h-1/3 flex items-center justify-center px-4 py-5">
-      <div className="flex flex-col md:flex-row gap-8 justify-center items-center">
-        <HoverCard
-          id="1"
-          image={pic5}
-          title="Magic Forest"
-          description="Explore the wonders of the."
+    <div className="px-4 py-6">
+      <div className="mb-6 text-center">
+        <input
+          type="text"
+          placeholder="🔍 Search blog..."
+          className="w-full max-w-md p-3 border border-purple-300 rounded-xl shadow focus:outline-none focus:ring-2 focus:ring-purple-400"
+          value={searchText}
+          onChange={(e) => setSearchText(e.target.value)}
         />
-        <HoverCard
-          id="2"
-          image={pic4}
-          title="Sky Adventure"
-          description="Soar high with the clouds."
-        />
-        <HoverCard
-          id="3"
-          image={pic3}
-          title="Ocean Secrets"
-          description="Dive into the mysterious depths of."
-        />
-        <HoverCard
-          id="4"
-          image={pic2}
-          title="Here's your"
-          description="inside the container so the layout ."
-        />
+      </div>
+
+      <div className="flex flex-wrap gap-8 justify-center items-start">
+        {filteredBlogs.length > 0 ? (
+          filteredBlogs.map((blog) => {
+            const imageUrl =
+              blog.images?.formats?.medium?.url ||
+              blog.images?.url ||
+              "https://via.placeholder.com/300x200.png?text=No+Image";
+
+            return (
+              <HoverCard
+                key={blog.id}
+                documentId={blog.documentId}
+                image={imageUrl}
+                title={blog.tittle}
+                description={blog.contant.replace(/<[^>]+>/g, "").slice(0, 100) + "..."}
+              />
+            );
+          })
+        ) : (
+          <p className="text-gray-500">No blogs found.</p>
+        )}
       </div>
     </div>
   );

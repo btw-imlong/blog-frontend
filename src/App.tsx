@@ -30,7 +30,8 @@ function App() {
         <Route path="/What-we-do" element={<WhatWeDo />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/blog-detail/:id" element={<BlogDetail />} />
+      <Route path="/blog-detail/:id" element={<BlogDetail />} />
+
       </Routes>
 
       {!hideLayout && <Footer />}

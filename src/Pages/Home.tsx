@@ -111,13 +111,13 @@ const Home = () => {
         initial={{ opacity: 0, y: 50 }}
         animate={isInView3 ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 1 }}
-        className="text-black px-4 lg:px-32 py-16"
+        className="text-black px-4  py-16"
       >
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={isInView3 ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.2, duration: 0.8 }}
-          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-8"
+          className="lg:px-32 text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-8"
         >
           New Feed
         </motion.h1>
@@ -128,8 +128,7 @@ const Home = () => {
           transition={{ delay: 0.4, duration: 0.8 }}
           className="space-y-6"
         >
-          <Card />
-          <Card />
+          <Card selectedCategory={null} />
         </motion.div>
 
         <motion.div

@@ -8,7 +8,7 @@ interface ModernButtonProps {
   icon?: JSX.Element;
   loading?: boolean;
   disabled?: boolean;
-  onClick?: (e: React.FormEvent) => void; // Updated to accept event argument
+  onClick?: (e: React.FormEvent) => void;
   size?: ButtonSize;
   theme?: ButtonTheme;
 }
@@ -30,6 +30,7 @@ const themeClasses: Record<ButtonTheme, string> = {
 
 const ModernButton: React.FC<ModernButtonProps> = ({
   text = "Click Me",
+  icon,
   loading = false,
   disabled = false,
   onClick,
@@ -41,20 +42,19 @@ const ModernButton: React.FC<ModernButtonProps> = ({
 
   return (
     <button
-      onClick={onClick} // onClick will now accept the event argument correctly
+      onClick={onClick}
       disabled={disabled || loading}
       className={`
         ${baseStyles}
         ${sizeClasses[size]}
         ${themeClasses[theme]}
-        ${
-          disabled || loading
-            ? "opacity-50 cursor-not-allowed cursor-poi"
-            : "cursor-pointer"
-        }
+        ${disabled || loading ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}
       `}
     >
-      {text}
+      {loading ? "Loading..." : <>
+        {icon && <span>{icon}</span>}
+        {text}
+      </>}
     </button>
   );
 };
