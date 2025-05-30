@@ -3,10 +3,9 @@ import { useEffect, useState } from "react";
 import ModernButton from "./modern-button";
 import { Link } from "react-router-dom";
 
-
 interface Blog {
   id: number;
-   documentId: string;
+  documentId: string;
   tittle: string;
   contant: string;
   images?: {
@@ -23,11 +22,11 @@ interface Blog {
 interface CardSectionProps {
   selectedCategory: string | null;
 }
+
 const HoverCard = ({ documentId, image, title, description }: any) => {
   return (
     <Link to={`/blog-detail/${documentId}`}>
-
-      <div className="w-full max-w-sm rounded-2xl overflow-hidden shadow-lg bg-white transform hover:scale-105 hover:bg-gradient-to-r from-pink-200 via-purple-200 to-blue-200 transition-all duration-500 ease-in-out cursor-pointer">
+      <div className="w-[16rem] h-[24rem] max-w-sm rounded-2xl overflow-hidden shadow-lg bg-white transform hover:scale-105 hover:bg-gradient-to-r from-pink-200 via-purple-200 to-blue-200 transition-all duration-500 ease-in-out cursor-pointer">
         <div className="overflow-hidden">
           <img
             src={image}
@@ -39,7 +38,7 @@ const HoverCard = ({ documentId, image, title, description }: any) => {
           <h2 className="text-2xl line-clamp-1 font-bold text-purple-700 mb-2 font-mono transition-all duration-300 hover:tracking-wide">
             {title}
           </h2>
-          <p className="text-gray-700 text-sm font-light mb-4 italic">
+          <p className="text-gray-700 text-sm font-light mb-4 italic line-clamp-2">
             {description}
           </p>
           <div className="flex justify-center">
@@ -87,15 +86,13 @@ const CardSection = ({ selectedCategory }: CardSectionProps) => {
             "https://via.placeholder.com/300x200.png?text=No+Image";
 
           return (
-            
-          <HoverCard
-  key={blog.documentId}
-  documentId={blog.documentId}
-  image={imageUrl}
-  title={blog.tittle}
-  description={blog.contant.replace(/<[^>]+>/g, "").slice(0, 100) + "..."}
-/>
-
+            <HoverCard
+              key={blog.documentId}
+              documentId={blog.documentId}
+              image={imageUrl}
+              title={blog.tittle}
+              description={blog.contant.replace(/<[^>]+>/g, "").slice(0, 100) + "..."}
+            />
           );
         })}
       </div>

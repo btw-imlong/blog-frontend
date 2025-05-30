@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
+import { FaThumbsUp, FaThumbsDown, FaComment } from "react-icons/fa";
 
 interface Blog {
   tittle: string;
@@ -17,6 +18,11 @@ const BlogDetail = () => {
   const { id } = useParams();
   const [blog, setBlog] = useState<Blog | null>(null);
 
+  // Optional: local state for counts (you can connect this to your API later)
+  const [likes, setLikes] = useState(0);
+  const [dislikes, setDislikes] = useState(0);
+  const [comments, setComments] = useState(0);
+
   useEffect(() => {
     if (!id) return;
 
@@ -32,6 +38,11 @@ const BlogDetail = () => {
           contant: data.contant,
           images: data.images,
         });
+
+        // Initialize counts if you have them in the response
+        // setLikes(data.likesCount || 0);
+        // setDislikes(data.dislikesCount || 0);
+        // setComments(data.commentsCount || 0);
       } catch (error) {
         console.error("Failed to fetch blog:", error);
       }
@@ -64,6 +75,33 @@ const BlogDetail = () => {
               className="text-gray-800 leading-relaxed prose max-w-none"
               dangerouslySetInnerHTML={{ __html: blog.contant }}
             ></div>
+
+            {/* Icon row */}
+            <div className="flex items-center justify-start space-x-10 mt-8 text-gray-600">
+              <button
+                onClick={() => setLikes(likes + 1)}
+                className="flex items-center space-x-2 hover:text-purple-600 transition-colors duration-300"
+              >
+                <FaThumbsUp size={22} />
+                <span>{likes}</span>
+              </button>
+
+              <button
+                onClick={() => setDislikes(dislikes + 1)}
+                className="flex items-center space-x-2 hover:text-red-600 transition-colors duration-300"
+              >
+                <FaThumbsDown size={22} />
+                <span>{dislikes}</span>
+              </button>
+
+              <button
+                onClick={() => alert("Show comments!")}
+                className="flex items-center space-x-2 hover:text-blue-600 transition-colors duration-300"
+              >
+                <FaComment size={22} />
+                <span>{comments}</span>
+              </button>
+            </div>
           </div>
         </>
       ) : (
